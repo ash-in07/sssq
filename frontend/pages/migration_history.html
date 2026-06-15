@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Migration History | SQL Migrator</title>
+  <link rel="stylesheet" href="../css/global.css" />
+  <link rel="stylesheet" href="../css/sidebar.css" />
+  <link rel="stylesheet" href="../css/tables.css" />
+</head>
+<body>
+  <div id="sidebar-container"></div>
+  <div class="page-content">
+    <header class="page-header">
+      <div class="header-content">
+        <h1>SQL Migrator</h1>
+        <p>Database Migration & Management Platform</p>
+      </div>
+    </header>
+    <main class="content-inner">
+      <section class="stats-grid">
+        <div class="card metric-card"><h3>Total</h3><strong>312</strong></div>
+        <div class="card metric-card"><h3>Successful</h3><strong>279</strong></div>
+        <div class="card metric-card"><h3>Warning</h3><strong>18</strong></div>
+        <div class="card metric-card"><h3>Failed</h3><strong>15</strong></div>
+      </section>
+      <section class="card">
+        <div class="table-controls">
+          <input type="search" placeholder="Search history" aria-label="Search migration history" />
+          <select aria-label="Filter by status"><option>All Status</option><option>Completed</option><option>Running</option><option>Failed</option></select>
+          <input type="date" aria-label="Start date" />
+          <input type="date" aria-label="End date" />
+        </div>
+        <div class="table-wrapper">
+          <table class="table-block" aria-label="Migration history table">
+            <thead>
+              <tr><th>Migration ID</th><th>User</th><th>Source</th><th>Target</th><th>Type</th><th>Date</th><th>Duration</th><th>Status</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>MIG-001</td><td>Daniel Park</td><td>MySQL</td><td>PostgreSQL</td><td>SQL to SQL</td><td>2026-06-01</td><td>12m</td><td><span class="status-pill status-success">Completed</span></td></tr>
+              <tr><td>MIG-002</td><td>Priya Nair</td><td>Oracle</td><td>CSV</td><td>SQL to File</td><td>2026-05-28</td><td>05m</td><td><span class="status-pill status-success">Completed</span></td></tr>
+              <tr><td>MIG-003</td><td>Sara Blake</td><td>CSV</td><td>SQL Server</td><td>File to SQL</td><td>2026-06-03</td><td>09m</td><td><span class="status-pill status-warning">Running</span></td></tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+    </main>
+  </div>
+  <script src="../js/api.js"></script>
+  <script src="../js/utils.js"></script>
+  <script src="../js/sidebar.js"></script>
+  <script>if (requireAuth()) initSidebar();</script>
+
+    <button id="reset-data-btn" style="margin: 20px; padding: 10px 20px; background: #e53935; color: white; border: none; border-radius: 5px; cursor: pointer;">Reset All Data</button>
+    <script>
+    async function resetData() {
+      const token = localStorage.sqlMigratorToken;
+      if (!token) { alert('You are not logged in.'); return; }
+      if (!confirm('Delete all reports, migrations, and history?')) return;
+      const resp = await fetch('/api/admin/reset', {
+        method: 'POST',
+        headers: { 'Authorization': `Bearer ${token}`, 'Content-Type': 'application/json' }
+      });
+      const data = await resp.json();
+      alert(data.message || 'Reset completed');
+      location.reload();
+    }
+    document.getElementById('reset-data-btn').addEventListener('click', resetData);
+    </script>
+</html>

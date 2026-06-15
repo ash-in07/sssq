@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Migration | SQL Migrator</title>
+  <link rel="stylesheet" href="../css/global.css" />
+  <link rel="stylesheet" href="../css/sidebar.css" />
+  <link rel="stylesheet" href="../css/migration.css" />
+</head>
+<body>
+  <!-- Dynamic Sidebar Container -->
+  <div id="sidebar-container"></div>
+
+  <!-- PAGE CONTENT -->
+  <div class="page-content">
+    <header class="page-header">
+      <div class="header-content">
+        <h1>SQL Migrator</h1>
+        <p>Database Migration &amp; Management Platform</p>
+      </div>
+    </header>
+    <main class="content-inner migration-shell">
+
+      <!-- TABS -->
+      <div class="migration-tabs" role="tablist" aria-label="Migration modes">
+        <button class="migration-tab active" data-target="sql-to-sql-panel" role="tab">SQL to SQL</button>
+        <button class="migration-tab" data-target="sql-to-file-panel" role="tab">SQL to File</button>
+        <button class="migration-tab" data-target="file-to-sql-panel" role="tab">File to SQL</button>
+      </div>
+
+      <!-- SQL TO SQL -->
+      <div id="sql-to-sql-panel" class="migration-panel">
+        <div class="panel-grid">
+          <div class="connection-card">
+            <h3>Source SQL Connection</h3>
+            <div class="input-group">
+              <label for="source-db-type">Database Type</label>
+              <select id="source-db-type">
+                <option value="mysql">MySQL</option>
+                <option value="postgres">PostgreSQL</option>
+                <option value="sqlite">SQLite</option>
+                <option value="sqlserver">SQL Server</option>
+                <option value="oracle">Oracle</option>
+                <option value="other">Other / Generic</option>
+              </select>
+            </div>
+            <div class="input-group">
+              <label for="source-host">Host</label>
+              <input id="source-host" type="text" placeholder="127.0.0.1" />
+            </div>
+            <div class="input-group">
+              <label for="source-port">Port</label>
+              <input id="source-port" type="text" placeholder="3306" />
+            </div>
+            <div class="input-group">
+              <label for="source-db-name">Database Name</label>
+              <input id="source-db-name" type="text" placeholder="example_db" />
+            </div>
+            <div class="input-group">
+              <label for="source-username">Username</label>
+              <input id="source-username" type="text" placeholder="db_user" />
+            </div>
+            <div class="input-group">
+              <label for="source-password">Password</label>
+              <input id="source-password" type="password" placeholder="••••••••" />
+            </div>
+            <div class="test-conn-row">
+              <button id="test-conn-source" class="button-secondary" type="button">Test Connection</button>
+              <span id="conn-status-source" class="conn-status" aria-live="polite"></span>
+            </div>
+          </div>
+
+          <div class="connection-card">
+            <h3>Target SQL Connection</h3>
+            <div class="input-group">
+              <label for="target-db-type">Database Type</label>
+              <select id="target-db-type">
+                <option value="postgres">PostgreSQL</option>
+                <option value="mysql">MySQL</option>
+                <option value="sqlite">SQLite</option>
+                <option value="sqlserver">SQL Server</option>
+                <option value="oracle">Oracle</option>
+                <option value="other">Other / Generic</option>
+              </select>
+            </div>
+            <div class="input-group">
+              <label for="target-host">Host</label>
+              <input id="target-host" type="text" placeholder="127.0.0.1" />
+            </div>
+            <div class="input-group">
+              <label for="target-port">Port</label>
+              <input id="target-port" type="text" placeholder="5432" />
+            </div>
+            <div class="input-group">
+              <label for="target-db-name">Database Name</label>
+              <input id="target-db-name" type="text" placeholder="example_db" />
+            </div>
+            <div class="input-group">
+              <label for="target-username">Username</label>
+              <input id="target-username" type="text" placeholder="db_user" />
+            </div>
+            <div class="input-group">
+              <label for="target-password">Password</label>
+              <input id="target-password" type="password" placeholder="••••••••" />
+            </div>
+            <div class="test-conn-row">
+              <button id="test-conn-target" class="button-secondary" type="button">Test Connection</button>
+              <span id="conn-status-target" class="conn-status" aria-live="polite"></span>
+            </div>
+          </div>
+        </div>
+        <div class="connection-card" style="grid-column: 1 / -1;">
+          <h3>Migration Options</h3>
+          <div class="input-group">
+            <label for="sql-tables">Tables to Migrate (comma-separated, leave empty for all)</label>
+            <input id="sql-tables" type="text" placeholder="users, orders, products" />
+          </div>
+        </div>
+        <form id="sql-to-sql-form" data-action="sql-to-sql" class="action-row">
+          <button type="submit" class="button-primary">Run Migration</button>
+        </form>
+      </div>
+
+      <!-- SQL TO FILE -->
+      <div id="sql-to-file-panel" class="migration-panel hidden">
+        <div class="panel-grid">
+          <div class="connection-card">
+            <h3>Source Database</h3>
+            <div class="input-group">
+              <label for="export-db-type">Database Type</label>
+              <select id="export-db-type">
+                <option value="mysql">MySQL</option>
+                <option value="postgres">PostgreSQL</option>
+                <option value="sqlite">SQLite</option>
+                <option value="sqlserver">SQL Server</option>
+                <option value="oracle">Oracle</option>
+                <option value="other">Other / Generic</option>
+              </select>
+            </div>
+            <div class="input-group">
+              <label for="export-host">Host</label>
+              <input id="export-host" type="text" />
+            </div>
+            <div class="input-group">
+              <label for="export-port">Port</label>
+              <input id="export-port" type="text" />
+            </div>
+            <div class="input-group">
+              <label for="export-db-name">Database Name</label>
+              <input id="export-db-name" type="text" />
+            </div>
+            <div class="input-group">
+              <label for="export-username">Username</label>
+              <input id="export-username" type="text" />
+            </div>
+            <div class="input-group">
+              <label for="export-password">Password</label>
+              <input id="export-password" type="password" />
+            </div>
+            <div class="test-conn-row">
+              <button id="test-conn-export" class="button-secondary" type="button">Test Connection</button>
+              <span id="conn-status-export" class="conn-status" aria-live="polite"></span>
+            </div>
+          </div>
+
+          <div class="connection-card">
+            <h3>Export Options</h3>
+            <div class="input-group">
+              <label for="export-table-name">Source Table Name</label>
+              <input id="export-table-name" type="text" placeholder="users" />
+            </div>
+            <div class="input-group">
+              <label for="export-columns">Columns (comma-separated, leave empty for all)</label>
+              <input id="export-columns" type="text" placeholder="id, name, email" />
+            </div>
+            <div class="input-group">
+              <label for="export-format">Format</label>
+              <select id="export-format">
+                <option value="csv">CSV</option>
+                <option value="json">JSON</option>
+                <option value="xlsx">Excel</option>
+              </select>
+            </div>
+            <p class="small-text">Select the source table and export format.</p>
+          </div>
+        </div>
+        <form id="sql-to-file-form" data-action="sql-to-file" class="action-row">
+          <button type="submit" class="button-primary">Export Data</button>
+        </form>
+      </div>
+
+      <!-- FILE TO SQL -->
+      <div id="file-to-sql-panel" class="migration-panel hidden">
+        <div class="panel-grid">
+          <div class="connection-card file-uploader">
+            <h3>File Upload</h3>
+            <div class="uploader-box" id="drop-zone" aria-label="File drop zone">
+              <div class="uploader-icon">📂</div>
+              <p>Drag &amp; drop your file here</p>
+              <p class="small-text">Supports CSV, JSON, Excel (.xlsx/.xls) and SQL dumps (.sql)</p>
+              <label class="upload-btn" for="source-file">Browse File</label>
+              <input id="source-file" type="file" accept=".csv,.json,.xlsx,.xls,.sql" />
+            </div>
+            <p id="file-preview" class="small-text file-preview-text">No file selected.</p>
+          </div>
+
+          <div class="connection-card">
+            <h3>Target Database</h3>
+            <div class="input-group">
+              <label for="file-target-db-type">Database Type</label>
+              <select id="file-target-db-type">
+                <option value="mysql">MySQL</option>
+                <option value="postgres">PostgreSQL</option>
+                <option value="sqlite">SQLite</option>
+                <option value="sqlserver">SQL Server</option>
+                <option value="oracle">Oracle</option>
+                <option value="other">Other / Generic</option>
+              </select>
+            </div>
+            <div class="input-group">
+              <label for="file-target-host">Host</label>
+              <input id="file-target-host" type="text" placeholder="127.0.0.1" />
+            </div>
+            <div class="input-group">
+              <label for="file-target-port">Port</label>
+              <input id="file-target-port" type="text" placeholder="5432" />
+            </div>
+            <div class="input-group">
+              <label for="file-target-db-name">Database Name</label>
+              <input id="file-target-db-name" type="text" placeholder="Leave blank for default SQLite" />
+            </div>
+            <div class="input-group">
+              <label for="file-target-username">Username</label>
+              <input id="file-target-username" type="text" />
+            </div>
+            <div class="input-group">
+              <label for="file-target-password">Password</label>
+              <input id="file-target-password" type="password" />
+            </div>
+            <div class="test-conn-row">
+              <button id="test-conn-file-target" class="button-secondary" type="button">Test Connection</button>
+              <span id="conn-status-file-target" class="conn-status" aria-live="polite"></span>
+            </div>
+          </div>
+
+          <div class="connection-card" style="grid-column: 1 / -1;">
+            <h3>Import Options</h3>
+            <div class="panel-grid" style="gap:16px;">
+              <div class="input-group">
+                <label for="file-target-table">Target Table Name <span class="small-text">(tabular files only — leave blank to use filename)</span></label>
+                <input id="file-target-table" type="text" placeholder="my_imported_table" />
+              </div>
+              <div class="input-group">
+                <label for="file-if-exists">If Table Already Exists</label>
+                <select id="file-if-exists">
+                  <option value="replace">Replace (drop &amp; recreate)</option>
+                  <option value="append">Append rows</option>
+                  <option value="fail">Fail if exists</option>
+                </select>
+              </div>
+            </div>
+            <p class="small-text">For <strong>.sql</strong> dump files, the target table name is ignored (tables are defined inside the SQL dump), but the <strong>if-exists</strong> options are supported (Fail, Replace, or Append).</p>
+          </div>
+        </div>
+        <form id="file-to-sql-form" data-action="file-to-sql" class="action-row">
+          <button type="submit" class="button-primary">Import To Database</button>
+        </form>
+      </div>
+
+      <!-- PROGRESS -->
+      <section class="progress-panel">
+        <h3>Migration Progress</h3>
+        <p class="small-text">Track live status and view logs in real time.</p>
+        <div class="progress-bar">
+          <div id="migration-progress-fill" class="progress-fill"></div>
+        </div>
+        <div class="progress-meta">
+          <span id="migration-progress-status">Pending</span>
+          <span id="migration-progress-percentage">0%</span>
+        </div>
+        <div id="migration-logs" class="log-console" aria-live="polite"></div>
+      </section>
+
+    </main>
+  </div>
+
+  <script src="../js/api.js"></script>
+  <script src="../js/utils.js"></script>
+  <script src="../js/sidebar.js"></script>
+  <script src="../js/migration.js"></script>
+  <script>
+    // Initialize page with common components
+    if (typeof initSidebar === 'function') initSidebar();
+    if (typeof loadSharedComponent === 'function') {
+      loadSharedComponent('header', () => {
+        if (typeof setProfileSummary === 'function') setProfileSummary();
+      });
+    }
+    if (typeof initMigrationPage === 'function') initMigrationPage();
+  </script>
+</body>
+</html>

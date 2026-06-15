@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>User Dashboard | SQL Migrator</title>
+  <link rel="stylesheet" href="../css/global.css" />
+  <link rel="stylesheet" href="../css/sidebar.css" />
+  <link rel="stylesheet" href="../css/dashboard.css" />
+</head>
+<body>
+  <div id="sidebar-container"></div>
+  <div class="page-content">
+    <header class="page-header">
+      <div class="header-content">
+        <h1>SQL Migrator</h1>
+        <p>Database Migration & Management Platform</p>
+      </div>
+    </header>
+    <main class="content-inner">
+      <section class="grid-two">
+        <section class="card">
+          <div class="header-bar">
+            <h2>Dashboard Summary</h2>
+          </div>
+          <div class="dashboard-summary" id="dashboard-summary"></div>
+        </section>
+        <section class="card">
+          <div class="header-bar">
+            <h2>Quick Actions</h2>
+          </div>
+          <div class="quick-actions" id="quick-actions"></div>
+        </section>
+      </section>
+      <section class="card">
+        <div class="header-bar">
+          <h2>Migration Overview</h2>
+        </div>
+        <div class="chart-box compact-chart">
+          <canvas id="migration-trends-chart" height="180"></canvas>
+        </div>
+      </section>
+      <section class="grid-two">
+        <section class="card">
+          <div class="header-bar">
+            <h2>Recent Migrations</h2>
+          </div>
+          <div class="table-wrapper">
+            <table class="table-block">
+              <thead>
+                <tr>
+                  <th>ID</th>
+                  <th>Source → Target</th>
+                  <th>Status</th>
+                  <th>Date</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>#128</td>
+                  <td>MySQL → PostgreSQL</td>
+                  <td><span class="status-pill status-success">Success</span></td>
+                  <td>May 31, 2026 10:30 AM</td>
+                </tr>
+                <tr>
+                  <td>#127</td>
+                  <td>PostgreSQL → SQLite</td>
+                  <td><span class="status-pill status-success">Success</span></td>
+                  <td>May 31, 2026 09:15 AM</td>
+                </tr>
+                <tr>
+                  <td>#126</td>
+                  <td>MySQL → Oracle</td>
+                  <td><span class="status-pill status-warning">Warning</span></td>
+                  <td>May 30, 2026 04:45 PM</td>
+                </tr>
+                <tr>
+                  <td>#125</td>
+                  <td>SQLite → MySQL</td>
+                  <td><span class="status-pill status-danger">Failed</span></td>
+                  <td>May 30, 2026 11:20 AM</td>
+                </tr>
+                <tr>
+                  <td>#124</td>
+                  <td>Oracle → PostgreSQL</td>
+                  <td><span class="status-pill status-success">Success</span></td>
+                  <td>May 29, 2026 03:10 PM</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+        <section class="card">
+          <div class="header-bar">
+            <h2>Recent Activities</h2>
+          </div>
+          <div class="activity-list" id="recent-activity"></div>
+        </section>
+      </section>
+    </main>
+  </div>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="../js/api.js"></script>
+  <script src="../js/utils.js"></script>
+  <script src="../js/sidebar.js"></script>
+  <script src="../js/dashboard.js"></script>
+  <script>initDashboardPage();</script>
+  <button id="reset-data-btn" style="margin: 20px; padding: 10px 20px; background: #e53935; color: white; border: none; border-radius: 5px; cursor: pointer;">Reset All Data</button>
+  <script>
+    async function resetData() {
+      const token = localStorage.sqlMigratorToken;
+      if (!token) { alert('You are not logged in.'); return; }
+      if (!confirm('Delete all reports, migrations, and history?')) return;
+      const resp = await fetch('/api/admin/reset', {
+        method: 'POST',
+        headers: { 'Authorization': `Bearer ${token}`, 'Content-Type': 'application/json' }
+      });
+      const data = await resp.json();
+      alert(data.message || 'Reset completed');
+      location.reload();
+    }
+    document.getElementById('reset-data-btn').addEventListener('click', resetData);
+  </script>
+</body>
+</html>

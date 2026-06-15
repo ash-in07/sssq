@@ -1,0 +1,50 @@
+.table-action {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 10px 14px;
+  border-radius: 14px;
+  border: 1px solid rgba(255,255,255,0.08);
+  background: rgba(255,255,255,0.04);
+  color: var(--text);
+}
+
+.table-controls {
+  display: flex;
+  justify-content: space-between;
+  gap: 14px;
+  flex-wrap: wrap;
+  margin-bottom: 20px;
+}
+
+.table-controls input,
+.table-controls select {
+  max-width: 240px;
+}
+
+.pagination {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-top: 16px;
+}
+
+.pagination button {
+  border: 1px solid rgba(255,255,255,0.08);
+  background: rgba(255,255,255,0.04);
+  color: var(--text);
+  padding: 10px 14px;
+  border-radius: 12px;
+}
+
+.pagination button.active {
+  background: rgba(99,102,241,0.2);
+}
+
+.table-empty {
+  text-align: center;
+  padding: 32px;
+  color: var(--muted);
+}

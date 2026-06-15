@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Settings | SQL Migrator</title>
+  <link rel="stylesheet" href="../css/global.css" />
+  <link rel="stylesheet" href="../css/sidebar.css" />
+  <link rel="stylesheet" href="../css/settings.css" />
+</head>
+<body>
+  <div id="sidebar-container"></div>
+  <div class="page-content">
+    <header class="page-header">
+      <div class="header-content">
+        <h1>SQL Migrator</h1>
+        <p>Database Migration & Management Platform</p>
+      </div>
+    </header>
+    <main class="content-inner settings-shell">
+      <div class="settings-topbar" style="display:flex; justify-content:space-between; align-items:center; gap:16px;">
+        <div>
+          <h2 id="settings-page-title" style="margin:0; font-size:1.1rem; font-weight:500;">Settings</h2>
+        </div>
+        <div id="settings-top-actions" style="display:flex; gap:12px; align-items:center;"></div>
+      </div>
+
+      <div class="tabs-bar" style="margin-top:18px; display:flex; gap:8px; align-items:center;">
+        <button class="tab-pill" data-tab="my-account">My Account</button>
+        <button class="tab-pill" data-tab="user-settings">User Settings</button>
+        <button class="tab-pill" data-tab="admin-settings">Admin Settings <span class="badge-amber" style="margin-left:8px;">Admin only</span></button>
+      </div>
+
+      <div class="settings-body" style="display:grid; grid-template-columns:170px 1fr; gap:20px; margin-top:18px;">
+        <aside id="settings-subnav" class="card" style="padding:12px;">
+          <!-- sub navigation injected here -->
+        </aside>
+        <section id="settings-content" class="card" style="padding:18px;">
+          <!-- settings subpage content rendered here -->
+          <div id="settings-placeholder">
+            <p class="small-text">Select a settings category from the left to begin.</p>
+          </div>
+        </section>
+      </div>
+    </main>
+  </div>
+  <script src="../js/api.js"></script>
+  <script src="../js/utils.js"></script>
+  <script src="../js/sidebar.js"></script>
+  <script src="../js/settings.js"></script>
+  <script>initSettingsPage();</script>
+</body>
+</html>

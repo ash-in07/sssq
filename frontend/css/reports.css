@@ -1,0 +1,36 @@
+.report-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 20px;
+}
+
+.report-card {
+  padding: 22px;
+}
+
+.report-row {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 20px;
+}
+
+.report-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.report-actions button {
+  padding: 10px 16px;
+  border-radius: 14px;
+}
+
+.report-table th, .report-table td {
+  padding: 16px 18px;
+}
+
+@media (max-width: 1024px) {
+  .report-grid, .report-row {
+    grid-template-columns: 1fr;
+  }
+}
